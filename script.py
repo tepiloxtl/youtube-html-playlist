@@ -1,4 +1,4 @@
-import yt_dlp, json, pprint, requests, os, datetime
+import yt_dlp, json, pprint, requests, os, datetime, shutil
 
 if not os.path.exists("output"):
     os.makedirs("output/thumbs")
@@ -73,3 +73,5 @@ f.close()
 f = open("output/index.html", "w", encoding="utf-8")
 f.write("\n".join([template[0], contentbody, thumbelement, template[1]]))
 f.close()
+
+shutil.copy("thumb.js", "output/")
