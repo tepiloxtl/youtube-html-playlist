@@ -4,7 +4,7 @@ It takes a public/unlisted playlist (probably private/special playlists too, rea
 
 ## Usage
 
-Requires yt-dlp. `python3 -m pip install yt-dlp`
+Requires yt-dlp and requests. `python3 -m pip install yt-dlp requests`
 
 Add your playlist link at line 12 in script.py, then run script.py. It will create `output` directory in your current working directory with all necessary files. Copy it over to your webserver/ webhost and thats all
 
