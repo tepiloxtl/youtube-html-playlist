@@ -7,9 +7,9 @@ thumbslist = [os.path.splitext(filename)[0] for filename in os.listdir("output/t
 newthumbslist = []
 #print(thumbslist)
 
-URL = "https://youtube.com/playlist?list=PLsx_B-fRIIQj4ystOGcuDdc408WSkDXF2"
+#URL = "https://youtube.com/playlist?list=PLsx_B-fRIIQj4ystOGcuDdc408WSkDXF2"
 #URL = 'https://www.youtube.com/playlist?list=PLsx_B-fRIIQhXHhWeK-1cDqG6uX9vLkpU'
-#URL = "https://www.youtube.com/playlist?list=PLsx_B-fRIIQhZMqBqEhBxXxzIMjLh12f9"
+URL = "https://www.youtube.com/playlist?list=PLsx_B-fRIIQhZMqBqEhBxXxzIMjLh12f9"
 ydl_opts = {}
 playlists = []
 #f = open("output.json", "w", encoding="utf-8")
@@ -75,3 +75,4 @@ f.write("\n".join([template[0], contentbody, thumbelement, template[1]]))
 f.close()
 
 shutil.copy("thumb.js", "output/")
+shutil.copy("table.css", "output/")
