@@ -19,3 +19,6 @@ Be aware that the youtube cookies seem to expire very quickly, reference https:/
 * Being able to pass more than one playlist at once and generate them on one page
 * Config file for playlists, choosing table fields and whatever
 * Fun stats about your playlist
+* Removing thumbnails after corresponding videos being removed from playlist
+
+In further future, I'd like to extend the application with features to keep watch on changes on playlists (such as video deletions, changes of titles and thumbnails, removals from playlist) and displaying them in some form as well
