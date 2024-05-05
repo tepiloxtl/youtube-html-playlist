@@ -61,7 +61,6 @@ for playlist in playlists:
     title = """<h2><a href="https://www.youtube.com/playlist?list={}">{}</a></h2>""".format(str(playlist["id"]), str(playlist["title"]))
     table = []
     for i, video in enumerate(playlist["entries"], start=1):
-        print(i)
         if i < playlist["startat"]:
             continue
         videodata = playlist["entries"][str(video)]
