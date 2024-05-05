@@ -11,7 +11,7 @@ newthumbslist = []
 #URL = 'https://www.youtube.com/playlist?list=PLsx_B-fRIIQhXHhWeK-1cDqG6uX9vLkpU'
 #URL = [["https://www.youtube.com/playlist?list=PLsx_B-fRIIQhZMqBqEhBxXxzIMjLh12f9", 2], ["https://www.youtube.com/playlist?list=PLsx_B-fRIIQhXHhWeK-1cDqG6uX9vLkpU", 0]]
 URL = [["https://www.youtube.com/playlist?list=PLsx_B-fRIIQhZMqBqEhBxXxzIMjLh12f9", 2]]
-ydl_opts = {}
+ydl_opts = {'ignoreerrors': True}
 playlists = []
 #f = open("output.json", "w", encoding="utf-8")
 for plist in URL:
@@ -24,7 +24,10 @@ for plist in URL:
         playlistinfo["entries"] = {}
         print(info["title"])
         for item in info["entries"]:
-            playlistinfo["entries"][str(item["id"])] = {"title": item["title"], "category": item["categories"][0], "duration": item["duration"], "channel": item["channel"], "uploaddate": item["upload_date"]}
+            if item != None:
+                playlistinfo["entries"][str(item["id"])] = {"title": item["title"], "category": item["categories"][0], "duration": item["duration"], "channel": item["channel"], "uploaddate": item["upload_date"]}
+            else:
+                pass
         if len(playlistinfo["entries"]) >= plist[1]:
             playlistinfo["startat"] = plist[1]
         else:
