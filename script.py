@@ -9,22 +9,28 @@ newthumbslist = []
 
 #URL = "https://youtube.com/playlist?list=PLsx_B-fRIIQj4ystOGcuDdc408WSkDXF2"
 #URL = 'https://www.youtube.com/playlist?list=PLsx_B-fRIIQhXHhWeK-1cDqG6uX9vLkpU'
-URL = "https://www.youtube.com/playlist?list=PLsx_B-fRIIQhZMqBqEhBxXxzIMjLh12f9"
+#URL = [["https://www.youtube.com/playlist?list=PLsx_B-fRIIQhZMqBqEhBxXxzIMjLh12f9", 2], ["https://www.youtube.com/playlist?list=PLsx_B-fRIIQhXHhWeK-1cDqG6uX9vLkpU", 0]]
+URL = [["https://www.youtube.com/playlist?list=PLsx_B-fRIIQhZMqBqEhBxXxzIMjLh12f9", 2]]
 ydl_opts = {}
 playlists = []
 #f = open("output.json", "w", encoding="utf-8")
-with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-    playlistinfo = {}
-    info = ydl.sanitize_info(ydl.extract_info(URL, download=False))
-    #json.dump(info, ensure_ascii=False, indent=4, fp=f)
-    playlistinfo["title"] = info["title"]
-    playlistinfo["id"] = info["id"]
-    playlistinfo["entries"] = {}
-    print(info["title"])
-    for item in info["entries"]:
-        playlistinfo["entries"][str(item["id"])] = {"title": item["title"], "category": item["categories"][0], "duration": item["duration"], "channel": item["channel"], "uploaddate": item["upload_date"]}
-    pprint.pprint(playlistinfo, indent = 4)
-    playlists.append(playlistinfo)
+for plist in URL:
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        playlistinfo = {}
+        info = ydl.sanitize_info(ydl.extract_info(plist[0], download=False))
+        #json.dump(info, ensure_ascii=False, indent=4, fp=f)
+        playlistinfo["title"] = info["title"]
+        playlistinfo["id"] = info["id"]
+        playlistinfo["entries"] = {}
+        print(info["title"])
+        for item in info["entries"]:
+            playlistinfo["entries"][str(item["id"])] = {"title": item["title"], "category": item["categories"][0], "duration": item["duration"], "channel": item["channel"], "uploaddate": item["upload_date"]}
+        if len(playlistinfo["entries"]) >= plist[1]:
+            playlistinfo["startat"] = plist[1]
+        else:
+            playlistinfo["startat"] = 0
+        pprint.pprint(playlistinfo, indent = 4)
+        playlists.append(playlistinfo)
 #f.close()
 
 thumbelement = """<script language=JavaScript src="thumb.js" type=text/javascript></script>
@@ -54,7 +60,10 @@ contentbody = ""
 for playlist in playlists:
     title = """<h2><a href="https://www.youtube.com/playlist?list={}">{}</a></h2>""".format(str(playlist["id"]), str(playlist["title"]))
     table = []
-    for video in playlist["entries"]:
+    for i, video in enumerate(playlist["entries"], start=1):
+        print(i)
+        if i < playlist["startat"]:
+            continue
         videodata = playlist["entries"][str(video)]
         table.append(tableentry.format(str(video), str(videodata["category"]), str(datetime.timedelta(seconds=videodata["duration"])), str(video), str(videodata["title"]), str(videodata["channel"]), str(videodata["uploaddate"][0:4] + "-" + videodata["uploaddate"][4:6] + "-" + videodata["uploaddate"][6:8])))
         newthumbslist.append(str(video))
